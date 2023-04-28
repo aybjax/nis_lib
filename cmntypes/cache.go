@@ -1,4 +1,4 @@
-package types
+package cmntypes
 
 type AppCache interface {
 	Get(key string) ([]byte, error)
