@@ -14,6 +14,8 @@ func (m *mapError) Error() string {
 	return string(val)
 }
 
+// Error as map for response object
+// implements error interface
 func NewMapError(err error) *mapError {
 	return &mapError{
 		"error": err.Error(),

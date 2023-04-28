@@ -3,6 +3,8 @@ package helper
 import (
 	"reflect"
 	"testing"
+
+	"github.com/aybjax/nis_lib/pbdto"
 )
 
 func TestSetDiff(t *testing.T) {
@@ -45,6 +47,33 @@ func TestSetDiff(t *testing.T) {
 
 		if !reflect.DeepEqual(expected, resultMap) {
 			t.Error("First slice is not returned")
+		}
+	})
+}
+
+func TestGenerateUpdateMessage(t *testing.T) {
+	t.Run("Should not return anything if modelId is nil value", func(t *testing.T) {
+		toUpdate := [...]string{"1", "2", "3"}
+
+		for range GenerateUpdateMessage("", toUpdate[:], 0) {
+			t.Error("Returned a value")
+		}
+	})
+	t.Run("Should not return anything if updateId is nil value", func(t *testing.T) {
+		toUpdate := [...]string{"", "", "3"}
+		const modelId = "ModelId"
+		expected := [...]*pbdto.UpdateEmbedded{{
+			Id:        "3",
+			PayloadId: modelId,
+		}}
+		var results []*pbdto.UpdateEmbedded
+
+		for v := range GenerateUpdateMessage(modelId, toUpdate[:], 0) {
+			results = append(results, v)
+		}
+
+		if !reflect.DeepEqual(expected[:], results) {
+			t.Error("Ids are not filtered well")
 		}
 	})
 }

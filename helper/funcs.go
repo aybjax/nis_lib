@@ -2,6 +2,8 @@ package helper
 
 import (
 	"runtime"
+
+	"github.com/aybjax/nis_lib/pbdto"
 )
 
 // Performs first - second as in sets
@@ -29,4 +31,27 @@ func SetDiff[T comparable](first []T, second []T) (result []T) {
 	}
 
 	return result
+}
+
+func GenerateUpdateMessage(modelId string, toUpdate []string, _type pbdto.UpdateType) <-chan *pbdto.UpdateEmbedded {
+	ch := make(chan *pbdto.UpdateEmbedded)
+
+	go func() {
+		for _, tu := range toUpdate {
+			if tu == "" || modelId == "" {
+				continue
+			}
+
+			msg := &pbdto.UpdateEmbedded{
+				Id:        tu,
+				PayloadId: modelId,
+			}
+
+			ch <- msg
+		}
+
+		close(ch)
+	}()
+
+	return ch
 }
