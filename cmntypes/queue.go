@@ -1,6 +1,6 @@
 package cmntypes
 
 type AppQueue interface {
-	Notify(data []byte, queue string, topic string) error
-	NotifyListener(queue string, topic string, cb func(data []byte) error)
+	Enqueue(data []byte, queue string, topic string) error
+	Dequeue(queue string, topic string, cb func(data []byte) error)
 }
