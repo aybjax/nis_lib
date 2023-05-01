@@ -45,6 +45,7 @@ func GenerateUpdateMessage(modelId string, toUpdate []string, _type pbdto.Update
 			msg := &pbdto.UpdateEmbedded{
 				Id:        tu,
 				PayloadId: modelId,
+				Type:      _type,
 			}
 
 			ch <- msg

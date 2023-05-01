@@ -76,4 +76,18 @@ func TestGenerateUpdateMessage(t *testing.T) {
 			t.Error("Ids are not filtered well")
 		}
 	})
+	t.Run("Update type should be given", func(t *testing.T) {
+		toUpdate := [...]string{"3"}
+		const modelId = "ModelId"
+		expected := 1
+		var result int
+
+		for v := range GenerateUpdateMessage(modelId, toUpdate[:], 1) {
+			result = int(v.Type)
+		}
+
+		if result != expected {
+			t.Error("Update type is not preserved")
+		}
+	})
 }
