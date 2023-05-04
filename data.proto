@@ -1,0 +1,72 @@
+syntax = "proto3";
+
+package nis_test;
+option go_package = "./app";
+
+message Course {
+    string id = 1;
+    string name = 2;
+    string description = 3;
+    string discipline = 4;
+    string teacher = 5;
+    repeated string student_ids = 6;
+}
+
+message Student {
+    string id = 1;
+    string name = 2;
+    string first_name = 3;
+    string last_name = 4;
+    repeated string course_ids = 6;
+}
+
+message Request {
+    string id = 1;
+}
+
+message CoursesResponse {
+    repeated Course courses = 1;
+}
+
+message StudentsResponse {
+    repeated Student students = 1;
+}
+
+service GetStudentCourses {
+    rpc GetCourses(Request) returns (CoursesResponse)
+    {}
+}
+
+service GetCourseStudents {
+    rpc GetStudents(Request) returns (StudentsResponse)
+    {}
+}
+
+////////////////////////////////////
+
+enum UpdateType {
+    Add = 0;
+    Delete = 1;
+}
+
+message UpdateEmbedded {
+    string id = 1;
+    string payload_id = 2;
+    UpdateType type = 3;
+}
+
+message DiffIds {
+    string id = 1;
+    repeated string old_ids = 2;
+    repeated string new_ids = 3;
+}
+
+//////////////////////////////
+
+message Courses {
+    repeated Course data = 1;
+}
+
+message Students {
+    repeated Student data = 1;
+}
