@@ -4,6 +4,7 @@
 ## /cmntypes
   - cache - contains lower level adapter for cache. Could be redis, nats, hashmap or anything else
   - queue - lower level adapter for queue. Could be redis, nats, rabbitmq, kafka, queue data type
+  - /cmntypes/mock_cmntypes - mock object by gomock; aut generated
 ## /helper
   - SetDiff[T comparable](first []T, second []T) (result []T)
     - Allows removal of elements of second element from first.
